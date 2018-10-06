@@ -2,8 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <unistd.h>
 
-#define CUSTOMERS 30000
+#define CUSTOMERS 40000
 #define MAX_CAPACITY 1200
 
 int main(){
@@ -19,7 +20,7 @@ int main(){
   arriving_turnstiles[0] = arriving_time[0] = (-1.0/lambda) * log(rand() * 1.0 / RAND_MAX);
   leaving_turnstiles[0] = arriving_turnstiles[0] + (-1.0 / lambda_turnstiles) * log(rand() * 1.0 / RAND_MAX);
 
-
+  printf("%f\n", arriving_turnstiles[0]);
   for (i = 1; i < CUSTOMERS; i++) {
     if(arriving_time[i - 1] > 60) {
         lambda = (arriving_time[i - 1] < 120) ? 175 : 135;
@@ -30,6 +31,7 @@ int main(){
     arriving_turnstiles[i] = ( arriving_time[i] > leaving_turnstiles[i - 1]) ? arriving_time[i] : leaving_turnstiles[i - 1];
     turnstiles_time = (-1.0 / lambda_turnstiles) * log(rand() * 1.0 / RAND_MAX);
     leaving_turnstiles[i] = arriving_turnstiles[i] + turnstiles_time;
+    printf("%f\n", leaving_turnstiles[i]);
   }
 
 
